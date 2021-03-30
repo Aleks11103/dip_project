@@ -124,5 +124,6 @@ STATIC_ROOT = BASE_DIR / 'shop' / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'shop' / 'media'
+# MEDIA_ROOT = BASE_DIR / 'shop' / 'static' / 'img'
 
 AUTH_USER_MODEL = 'home.User'

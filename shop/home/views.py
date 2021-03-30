@@ -15,8 +15,18 @@ def dict_key(dictionary, key):
     return dictionary[key]
 
 
-def product_list(request):
-    object_list = Product.objects.all()
+def product_list(request, category_slug=None, subcategory_slug=None):
+    name_filter = 'Все товары'
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        name_filter = 'Категория: ' + category.name
+        object_list = Product.objects.filter(available=True, category=category)
+    elif subcategory_slug:
+        subcategory = get_object_or_404(Subcategory, slug=subcategory_slug)
+        name_filter = 'Категория: ' + subcategory.name
+        object_list = Product.objects.filter(available=True, subcategory=subcategory)
+    else:
+        object_list = Product.objects.filter(available=True)
     paginator = Paginator(object_list, 20)
     page = request.GET.get('page')
     try:
@@ -39,6 +49,7 @@ def product_list(request):
         request,
         'home/list.html',
         {
+            'name_filter': name_filter,
             'page': page,
             'products': products,
             'categories': categories,

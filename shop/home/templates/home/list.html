@@ -29,15 +29,15 @@
                     {% comment %} <p>{{ subcategories.category }}</p> {% endcomment %}
                     <!-- Single menu start -->
                     <li class="arrow-plus">
-                    <a href="#">{{ category }}</a>
+                    <a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a>
                     <!--  MEGA MENU START -->
                     <div class="cat-left-drop-menu">
                         <div class="cat-left-drop-menu-left">
-                        <a class="menu-item-heading" href="#">{{ category }}</a>
+                        <a class="menu-item-heading" href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a>
                         <ul>
                             {% comment %} {% for subcategory in subcategories.category %} {% endcomment %}
                             {% for subcategory in subcategories|dict_key:category %}
-                                <li><a href="#">{{ subcategory }}</a></li>
+                                <li><a href="{% url 'home_view' %}subcategory/{{ subcategory.slug }}">{{ subcategory }}</a></li>
                             {% endfor %}
                             {% comment %} <li><a href="#">Blouses And Shirts</a></li>
                             <li><a href="#">Clutches</a></li>
@@ -86,8 +86,7 @@
                     <!-- Single menu end -->
 
                     {% else %}
-                        <li><a href="#">{{ category }}</a></li>
-                        <p>{{ subcategories|dict_key:category }}</p>
+                        <li><a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a></li>
 
                   {% endif %}
                         
@@ -106,11 +105,9 @@
               <!-- Start Product-Menu -->
               <div class="product-menu">
                 <div class="product-title">
-                  <h3 class="title-group-3 gfont-1">Все товары</h3>
+                  <h3 class="title-group-3 gfont-1">{{ name_filter }}</h3>
                 </div>
               </div>
-
-
               {% comment %} <div class="product-filter">
                 <ul role="tablist">
                   <li role="presentation" class="list">
@@ -146,9 +143,9 @@
                   </select>
                 </div>
               </div> {% endcomment %}
-
-
               <!-- End Product-Menu -->
+
+
               <div class="clear"></div>
             </div>
           </div>
@@ -249,31 +246,6 @@
 
                       </div>
                     </div>
-
-
-                    {% comment %} <!-- Start Pagination Area -->
-                    <div class="pagination-area">
-                      <div class="row">
-                        <div class="col-xs-5">
-                          <div class="pagination">
-                            <ul>
-                              <li class="active"><a href="#">1</a></li>
-                              <li><a href="#">2</a></li>
-                              <li><a href="#">></a></li>
-                              <li><a href="#">>|</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="col-xs-7">
-                          <div class="product-result">
-                            <span>Showing 1 to 16 of 19 (2 Pages)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End Pagination Area --> {% endcomment %}
-
-
                   </div>
                   <!-- End Product -->
                   <!-- Start Product-->
@@ -284,6 +256,12 @@
                   >
                     
                     <div class="row">
+                    
+                    {% if not products %}
+                      <br>
+                      <h3>Товары отстутствуют</h3>
+                    {% endif %}
+                      
                       {% for product in products %}
                         
                       <!-- Start Single-Product -->
@@ -307,8 +285,10 @@
                                 class="primary-img"
                           {% if product.image %}
                                 src="{{ MEDIA_URL }}media/{{ product.image }}"
+                                {% comment %} src="{% static 'img' %}/{{ product.image }}" {% endcomment %}
                           {% else %}
-                                src="{{ MEDIA_URL }}media/no_photo.jpg"
+                                src="media/no_photo.jpg"
+                                {% comment %} src="{% static 'img/no_photo.jpg' %}" {% endcomment %}
                           {% endif %}
                                 alt="Товар"
                               />
@@ -339,8 +319,6 @@
                             </span> {% endcomment %}
                             <div class="product-button">
                                 <button>
-                                  href="#"
-                                  >
                                   <i class="fa fa-shopping-cart"></i> Добавить в корзину
                                 </a>
                                 </button>
