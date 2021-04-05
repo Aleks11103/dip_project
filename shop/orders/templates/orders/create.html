@@ -1,0 +1,219 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<!-- START PAGE-CONTENT -->
+<section class="page-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- CATEGORY-MENU-LIST START -->
+        <div class="left-category-menu hidden-sm hidden-xs">
+          <div class="left-product-cat">
+            <div class="category-heading">
+              <h2>категории</h2>
+            </div>
+            <div class="category-menu-list">
+              <ul>
+                {% for category in categories %} 
+								{% if subcategories|dict_key:category %} {% comment %}
+                <p>{{ subcategories.category }}</p>
+                {% endcomment %}
+                <!-- Single menu start -->
+                <li class="arrow-plus">
+                  <a href="{% url 'home_view' %}category/{{ category.slug }}"
+                    >{{ category }}</a
+                  >
+                  <!--  MEGA MENU START -->
+                  <div class="cat-left-drop-menu">
+                    <div class="cat-left-drop-menu-left">
+                      <a
+                        class="menu-item-heading"
+                        href="{% url 'home_view' %}category/{{ category.slug }}"
+                        >{{ category }}</a
+                      >
+                      <ul>
+                        {% comment %} {% for subcategory in
+                        subcategories.category %} {% endcomment %} 
+												{% for subcategory in subcategories|dict_key:category %}
+                        <li>
+                          <a
+                            href="{% url 'home_view' %}subcategory/{{ subcategory.slug }}"
+                            >{{ subcategory }}</a
+                          >
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- MEGA MENU END -->
+                </li>
+                <!-- Single menu end -->
+                {% else %}
+                <li>
+                  <a href="{% url 'home_view' %}category/{{ category.slug }}"
+                    >{{ category }}</a
+                  >
+                </li>
+                {% endif %}
+								{% endfor %}
+                <!-- MENU ACCORDION END -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- END CATEGORY-MENU-LIST -->
+      </div>
+      <div class="col-md-9">
+        <!-- Start checkout-area -->
+        <div class="checkout-area">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="cart-title">
+                <h2 class="entry-title">Оформление заказа</h2>
+
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<td class="text-left">Название товара</td>
+											<td class="text-left">Количество</td>
+											<td class="text-left">Цена за штуку</td>
+											<td class="text-left">Общая цена</td>
+										</tr>
+									</thead>
+									<tbody>
+										{% for item in cart %}
+                    {% with product=item.product %}
+                    <tr>
+                      <td class="text-left">
+                        <a href="#">{{ product.name }}</a>
+                      </td>
+                      {% comment %} <td class="text-left">Product 14</td> {% endcomment %}
+                      <td class="text-left">
+                        <div class="btn-block cart-put">
+                          {{ item.quantity }}
+                          <div class="input-group-btn cart-buttons">
+                            <a href={% url 'cart_remove' product.id %}>
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-right">{{ item.price }}</td>
+                      <td class="text-right">{{ item.total_price }}</td>
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+									</tbody>
+									<tfoot>
+										<tr>
+											<td class="text-right" colspan="3">
+												<strong>Итого:</strong>
+											</td>
+											<td class="text-right">{{ cart.get_total_price }}</td>
+									</tfoot>
+								</table>
+
+								<form action="." method="post" class="order-form" style="padding-left: 20px">
+									{{ form.as_p }}
+									<p><input type="submit" class="btn btn-primary" value="Оформить заказ"></p>
+									{% csrf_token %}
+								</form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Shopping-Cart -->
+      </div>
+    </div>
+  </div>
+  <!-- START BRAND-LOGO-AREA -->
+  <div class="brand-logo-area carosel-navigation">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="area-title">
+            <h3 class="title-group border-red gfont-1">Brand Logo</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="active-brand-logo">
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/1.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/2.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/3.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/4.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/5.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/6.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/1.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/2.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="img/brand/3.png" alt="" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END BRAND-LOGO-AREA -->
+  <!-- START SUBSCRIBE-AREA -->
+  <div class="subscribe-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-7 col-xs-12">
+          <label class="hidden-sm hidden-xs">Sign Up for Our Newsletter:</label>
+          <div class="subscribe">
+            <form action="#">
+              <input type="text" placeholder="Enter Your E-mail" />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-5 col-xs-12">
+          <div class="social-media">
+            <a href="#"><i class="fa fa-facebook fb"></i></a>
+            <a href="#"><i class="fa fa-google-plus gp"></i></a>
+            <a href="#"><i class="fa fa-twitter tt"></i></a>
+            <a href="#"><i class="fa fa-youtube yt"></i></a>
+            <a href="#"><i class="fa fa-linkedin li"></i></a>
+            <a href="#"><i class="fa fa-rss rs"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END SUBSCRIBE-AREA -->
+</section>
+<!-- END PAGE-CONTENT -->
+{% endblock content %}
