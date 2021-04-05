@@ -1,0 +1,351 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<section class="page-content">
+  <div class="container">
+    <br>
+    <div class="row">
+      <div class="col-md-3">
+        <!-- CATEGORY-MENU-LIST START -->
+        <div class="left-category-menu hidden-sm hidden-xs">
+          <div class="left-product-cat">
+            <div class="category-heading">
+              <h2>категории</h2>
+            </div>
+            <div class="category-menu-list">
+              <ul>
+                {% for category in categories %}  
+
+                  {% if subcategories|dict_key:category %}
+                    {% comment %} <p>{{ subcategories.category }}</p> {% endcomment %}
+                    <!-- Single menu start -->
+                    <li class="arrow-plus">
+                    <a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a>
+                    <!--  MEGA MENU START -->
+                    <div class="cat-left-drop-menu">
+                        <div class="cat-left-drop-menu-left">
+                        <a class="menu-item-heading" href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a>
+                        <ul>
+                            {% comment %} {% for subcategory in subcategories.category %} {% endcomment %}
+                            {% for subcategory in subcategories|dict_key:category %}
+                                <li><a href="{% url 'home_view' %}subcategory/{{ subcategory.slug }}">{{ subcategory }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+                    <!-- MEGA MENU END -->
+                    </li>
+                    <!-- Single menu end -->
+                    {% else %}
+                        <li><a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                <!-- MENU ACCORDION END --> 
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-xs-12">
+        <!-- START PRODUCT-AREA -->
+        <div class="product-area">
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- Start Product-Menu -->
+              <div class="product-menu">
+                <div class="product-title">
+                  <h3 class="title-group-3 gfont-1">{{ name_filter }}</h3>
+                </div>
+              </div>
+              {% comment %} <div class="product-filter">
+                <ul role="tablist">
+                  <li role="presentation" class="list">
+                    <a href="#display-1-1" role="tab" data-toggle="tab"></a>
+                  </li>
+                  <li role="presentation" class="grid active">
+                    <a href="#display-1-2" role="tab" data-toggle="tab"></a>
+                  </li>
+                </ul>
+                <div class="sort">
+                  <label>Sort By:</label>
+                  <select>
+                    <option value="#">Default</option>
+                    <option value="#">Name (A - Z)</option>
+                    <option value="#">Name (Z - A)</option>
+                    <option value="#">Price (Low > High)</option>
+                    <option value="#">Rating (Highest)</option>
+                    <option value="#">Rating (Lowest)</option>
+                    <option value="#">Name (A - Z)</option>
+                    <option value="#">Model (Z - A))</option>
+                    <option value="#">Model (A - Z)</option>
+                  </select>
+                </div>
+                <div class="limit">
+                  <label>Show:</label>
+                  <select>
+                    <option value="#">8</option>
+                    <option value="#">16)</option>
+                    <option value="#">24</option>
+                    <option value="#">40</option>
+                    <option value="#">80</option>
+                    <option value="#">100</option>
+                  </select>
+                </div>
+              </div> {% endcomment %}
+              <!-- End Product-Menu -->
+
+
+              <div class="clear"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-md-12">
+              <!-- Start Product -->
+              <div class="product">
+                <div class="tab-content">
+                  <!-- Product -->
+                  <div role="tabpanel" class="tab-pane fade" id="display-1-1">
+                    <div class="row">
+                      <div class="listview">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Product -->
+                  <!-- Start Product-->
+                  <div
+                    role="tabpanel"
+                    class="tab-pane fade in active"
+                    id="display-1-2"
+                  >
+                    <div class="row">
+                    
+                    {% if not products %}
+                      <br>
+                      <h3>Товары отстутствуют</h3>
+                    {% endif %}
+                      
+                      {% for product in products %}
+                        
+                      <!-- Start Single-Product -->
+                      <div class="col-md-3 col-sm-4 col-xs-12">
+                        <div class="single-product">
+                          {% comment %} <div class="label_new">
+                            <span class="new">new</span>
+                          </div> {% endcomment %}
+                          
+                          {% if product.discount %}
+                          
+                          <div class="sale-off">
+                            <span class="sale-percent">- {{ product.discount }} %</span>
+                          </div>
+                              
+                          {% endif %}
+
+                          <div class="product-img">
+                            <a href="{% url 'home_view' %}product/{{ product.id }}">
+                              <img
+                                class="primary-img"
+                                width=180px
+                                {% if product.image %}
+                                      src="{{ MEDIA_URL }}{{ product.image }}"
+                                {% else %}
+                                      src="{{ MEDIA_URL }}no_photo.jpg"
+                                {% endif %}
+                                alt="Товар"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="{% url 'home_view' %}product/{{ product.id }}">{{ product.name }}</a></h5>
+                            <div class="price-box">
+                            
+                            {% if product.discount_price %}
+                              <span class="price">{{ product.discount_price }}</span>
+                              <span class="old-price">{{ product.price }}</span>
+                            {% else %}
+                              <span class="price">{{ product.price }}</span>
+                            {% endif %}
+
+                            </div>
+                            {% comment %} <span class="rating">
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star"></i>
+                              <i class="fa fa-star-o"></i>
+                            </span> {% endcomment %}
+                            <div class="product-button">
+                              {% comment %} <a href={% url 'cart_add' product.id %} style="color: white;">
+                              <button onclick="location.href={% url 'cart_add' product.id %}">
+                              <button>
+                                <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                              </button>
+                              </a> {% endcomment %}
+                            </div>
+                          </div>
+                          {% comment %} <div class="product-action">
+                            <div class="button-group">
+                              <div class="product-button">
+                                <button>
+                                  <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                                </button>
+                              </div>
+                              <div class="product-button-2">
+                                <a
+                                  href="#"
+                                  data-toggle="tooltip"
+                                  title="Wishlist"
+                                  ><i class="fa fa-heart-o"></i
+                                ></a>
+                                <a
+                                  href="#"
+                                  data-toggle="tooltip"
+                                  title="Compare"
+                                  ><i class="fa fa-signal"></i
+                                ></a>
+                                <a
+                                  href="#"
+                                  class="modal-view"
+                                  data-toggle="modal"
+                                  data-target="#productModal"
+                                  ><i class="fa fa-search-plus"></i
+                                ></a>
+                              </div>
+                            </div>
+                          </div> {% endcomment %}
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      
+                      {% endfor %}
+
+                      </div>
+
+                    {% comment %} <!-- Start Pagination Area -->
+                    <div class="pagination-area">
+                      <div class="row">
+                        <div class="col-xs-5">
+                          <div class="pagination">
+                            <ul>
+                              <li class="active"><a href="#">1</a></li>
+                              <li><a href="#">2</a></li>
+                              <li><a href="#">></a></li>
+                              <li><a href="#">>|</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-xs-7">
+                          <div class="product-result">
+                            <span>Showing 1 to 16 of 19 (2 Pages)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Pagination Area --> {% endcomment %}
+
+                    {% include 'home/pagination.html' with page=products %}
+
+                  </div>
+                  <!-- End Product = TV -->
+                </div>
+              </div>
+              <!-- End Product -->
+            </div>
+          </div>
+        </div>
+        <!-- END PRODUCT-AREA -->
+      </div>
+    </div>
+  </div>
+  <!-- START BRAND-LOGO-AREA -->
+  <div class="brand-logo-area carosel-navigation">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="area-title">
+            <h3 class="title-group border-red gfont-1">Brand Logo</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="active-brand-logo">
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/1.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/2.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/3.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/4.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/5.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/6.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/1.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/2.png" alt="" /></a>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="single-brand-logo">
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/3.png" alt="" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END BRAND-LOGO-AREA -->
+  <!-- START SUBSCRIBE-AREA -->
+  <div class="subscribe-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-sm-7 col-xs-12">
+          <label class="hidden-sm hidden-xs">Sign Up for Our Newsletter:</label>
+          <div class="subscribe">
+            <form action="#">
+              <input type="text" placeholder="Enter Your E-mail" />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-5 col-xs-12">
+          <div class="social-media">
+            <a href="#"><i class="fa fa-facebook fb"></i></a>
+            <a href="#"><i class="fa fa-google-plus gp"></i></a>
+            <a href="#"><i class="fa fa-twitter tt"></i></a>
+            <a href="#"><i class="fa fa-youtube yt"></i></a>
+            <a href="#"><i class="fa fa-linkedin li"></i></a>
+            <a href="#"><i class="fa fa-rss rs"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END SUBSCRIBE-AREA -->
+</section>
+{% endblock content %}

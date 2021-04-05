@@ -1,0 +1,308 @@
+{% load static %}
+
+<header class="header-area">
+	<!-- HEADER-TOP START -->
+	<div class="header-top hidden-xs">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="top-menu">
+						<!-- Start Language -->
+						<ul class="language">
+							<li><a href="#"><img class="right-5" src="{{ MEDIA_URL }}img/flags/ru.png" alt="#">Русский<i class="fa fa-caret-down left-5"></i></a>
+								<ul>
+									{% comment %} <li><a href="#"><img class="right-5" src="{{ MEDIA_URL }}img/flags/ru.png" alt="#">Русский</a></li> {% endcomment %}
+									<li><a href="#"><img class="right-5" src="{{ MEDIA_URL }}img/flags/gb.png" alt="#">English</a></li>
+								</ul> 
+							</li>
+						</ul>
+						<!-- End Language -->
+						<!-- Start Currency -->
+						<ul class="currency">
+							<li><a href="#"><strong>Br</strong> BYN<i class="fa fa-caret-down left-5"></i></a>
+								<ul>
+									{% comment %} <li><a href="#">$ EUR</a></li>
+									<li><a href="#">$ GBP</a></li> {% endcomment %}
+									<li><a href="#">$ USD</a></li>
+								</ul>
+							</li>
+						</ul>
+						<!-- End Currency -->
+						<p class="welcome-msg">Добро пожаловать в наш магазин!</p>
+					</div>
+					<!-- Start Top-Link -->
+					<div class="top-link">
+						<ul class="link">
+							<li><a href="my-account.html"><i class="fa fa-user"></i> Аккаунт</a></li>
+							{% comment %} <li><a href="wishlist.html"><i class="fa fa-heart"></i> Wish List (0)</a></li> {% endcomment %}
+							{% comment %} <li><a href="checkout.html"><i class="fa fa-share"></i> Checkout</a></li> {% endcomment %}
+							
+
+							{% comment %} {% if  %}
+								
+							{% else %}
+								
+							{% endif %} {% endcomment %}
+							
+								
+							<li><a href="account.html"><i class="fa fa-unlock-alt"></i> Войти</a></li>
+						</ul>
+					</div>
+					<!-- End Top-Link -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- HEADER-TOP END -->
+	<!-- HEADER-MIDDLE START -->
+	<div class="header-middle">
+		<div class="container">
+			<!-- Start Support-Client -->
+			<div class="support-client hidden-xs">
+				<div class="row">
+					<!-- Start Single-Support -->
+					<div class="col-md-3 hidden-sm">
+						<div class="single-support">
+							<div class="support-content">
+								<i class="fa fa-clock-o"></i>
+								<div class="support-text">
+									<h1 class="zero gfont-1">Время работы</h1>
+									<p>ПН - ВС: 9:00 - 21:00</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Single-Support -->
+					<!-- Start Single-Support -->
+					<div class="col-md-3 col-sm-4">
+						<div class="single-support">
+							<i class="fa fa-truck"></i>
+							<div class="support-text">
+								<h1 class="zero gfont-1">Free shipping</h1>
+								<p>On order over $199</p>
+							</div>
+						</div>
+					</div>
+					<!-- End Single-Support -->
+					<!-- Start Single-Support -->
+					<div class="col-md-3 col-sm-4">
+						<div class="single-support">
+							<i class="fa fa-money"></i>
+							<div class="support-text">
+								<h1 class="zero gfont-1">Money back 10%</h1>
+								<p>Within 30 Days after delivery</p>
+							</div>
+						</div>
+					</div>
+					<!-- End Single-Support -->
+					<!-- Start Single-Support -->
+					<div class="col-md-3 col-sm-4">
+						<div class="single-support">
+							<i class="fa fa-phone-square"></i>
+							<div class="support-text">
+								<h1 class="zero gfont-1">Phone: 0123456789</h1>
+								<p>Order Online Now !</p>
+							</div>
+						</div>
+					</div>
+					<!-- End Single-Support -->
+				</div>
+			</div>
+			<!-- End Support-Client -->
+			<!-- Start logo & Search Box -->
+			<div class="row">
+				<div class="col-md-2 col-sm-12">
+					<div class="logo">
+						<a href={% url 'home_view' %} title="Malias"><img src="{{ MEDIA_URL }}img/logo.png" alt="Malias"></a>
+					</div>
+				</div>
+				<div class="col-md-10 col-sm-12">
+					<div class="quick-access">
+						<div class="search-by-category">
+							<div class="search-container">
+								<select>
+								  <option class="all-cate">Все категории</option>
+
+								  {% for category in categories %}  
+									
+                  				    {% if subcategories|dict_key:category %}
+									  <optgroup  class="cate-item-head" label="{{ category }}">
+
+									    {% for subcategory in subcategories|dict_key:category %}
+										  <option class="cate-item-title">{{ subcategory }}</option>
+                            		    {% endfor %}
+									
+								    {% endif %}
+								
+								  {% endfor %}
+										
+								</select>
+							</div>
+							<div class="header-search">
+								<form action="#">
+									<input type="text" placeholder="Search">
+									<button type="submit"><i class="fa fa-search"></i></button>
+								</form>
+							</div>
+						</div>
+						<div class="top-cart">
+							<ul>
+								<li>
+									<a href={% url 'cart_detail' %}>
+										<span class="cart-icon"><i class="fa fa-shopping-cart"></i></span>
+										<span class="cart-total">
+											<span class="cart-title">корзина</span>
+											{% with total_items=cart|length %}
+												{% if total_items > 0 %}
+												<span class="cart-item">{{ total_items }} товар(-ов)- </span>
+												<span class="top-cart-price">{{ cart.get_total_price }}</span>
+												{% else %}
+												<span class="cart-item">Корзина пуста</span>
+												{% endif %}
+   											{% endwith %}	
+										</span>
+									</a>
+									<div class="mini-cart-content">
+										{% for item in cart %}
+                    					{% with product=item.product %}
+										<div class="cart-img-details">
+											<div class="cart-img-photo">
+											{% if product.image %}
+											<a href="#"><img src="{{ MEDIA_URL }}{{ product.image }}" alt="#"></a>
+											{% else %}
+											<a href="#"><img src="{{ MEDIA_URL }}no_photo.jpg" alt="#"></a>
+											{% endif %}
+											</div>
+											<div class="cart-img-content">
+												<a href="#"><h4>{{ product.name }}</h4></a>
+												<span>
+													<strong class="text-right">{{ item.quantity }} x</strong>
+													<strong class="cart-price text-right">
+													{% if product.discount_price %}
+													{{ product.discount_price }}
+													{% else %}
+													{{ product.price }}
+													{% endif %}
+													</strong>
+												</span>
+											</div>
+											<div class="pro-del">
+												<a href={% url 'cart_remove' product.id %}><i class="fa fa-times"></i></a>
+											</div>
+										</div>
+										<div class="clear"></div>
+										{% endwith %}
+										{% endfor %}
+										{% comment %} <div class="cart-img-details">
+											<div class="cart-img-photo">
+												<a href="#"><img src="{{ MEDIA_URL }}img/product/total-cart2.jpg" alt="#"></a>
+											</div>
+											<div class="cart-img-content">
+												<a href="#"><h4>Fact Prone</h4></a>
+												<span>
+													<strong class="text-right">1 x</strong>
+													<strong class="cart-price text-right">$185.00</strong>
+												</span>
+											</div>
+											<div class="pro-del">
+												<a href="#"><i class="fa fa-times"></i></a>
+											</div>
+										</div> {% endcomment %}
+										<div class="cart-inner-bottom">
+											<span class="total">
+												Сумма:
+												<span class="amount">{{ cart.get_total_price }}</span>
+											</span>
+											<span class="cart-button-top">
+												<a href={% url 'cart_detail' %}>Показать корзину</a>
+												<a href="checkout.html">Checkout</a>
+											</span>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End logo & Search Box -->
+		</div> 
+	</div>
+	<!-- HEADER-MIDDLE END -->
+	<!-- START MAINMENU-AREA -->
+	<div class="mainmenu-area shop-page">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="mainmenu hidden-sm hidden-xs">
+						<nav>
+							<ul>
+								<li><a href={% url 'home_view' %}>На главную</a>
+									<ul>
+										<li><a href="index.html">Home Versions 1</a></li>
+										<li><a href="index-2.html">Home Versions 2</a></li>
+									</ul>
+								</li>
+								<li><a href="about.html">About Us</a></li>
+								<li class="hot"><a href="shop.html">Bestseller Products</a></li>
+								<li class="new"><a href="shop-list.html">New Products</a></li>
+								<li><a href="shop.html">Special Products</a></li>
+								<li><a href="#">Pages</a>
+									<ul>
+										<li><a href="cart.html">Cart</a></li>
+										<li><a href="checkout.html">Checkout</a></li>
+										<li><a href="account.html">Create Account</a></li>
+										<li><a href="my-account.html">My Account</a></li>
+										<li><a href="product-details.html">Product details</a></li>
+										<li><a href="shop.html">Shop Grid View</a></li>
+										<li><a href="shop-list.html">Shop List View</a></li>
+										<li><a href="wishlist.html">Wish List</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END MAIN-MENU-AREA -->
+	<!-- Start Mobile-menu -->
+	<div class="mobile-menu-area no-margin hidden-md hidden-lg">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<nav id="mobile-menu">
+						<ul>
+							<li><a href="index.html">Home</a>
+								<ul>
+									<li><a href="index.html">Home Page 1</a></li>
+									<li><a href="index-2.html">Home Page 2</a></li>
+								</ul>
+							</li>
+							<li><a href="about.html">About Us</a></li>
+							<li><a href="shop.html">Bestseller Products</a></li>
+							<li><a href="shop-list.html">New Products</a></li>
+							<li><a href="#">Pages</a>
+								<ul>
+									<li><a href="cart.html">Cart</a></li>
+									<li><a href="checkout.html">Checkout</a></li>
+									<li><a href="account.html">Create Account</a></li>
+									<li><a href="login.html">Login</a></li>
+									<li><a href="my-account.html">My Account</a></li>
+									<li><a href="product-details.html">Product details</a></li>
+									<li><a href="shop.html">Shop Grid View</a></li>
+									<li><a href="shop-list.html">Shop List View</a></li>
+									<li><a href="wishlist.html">Wish List</a></li>
+								</ul>
+							</li>
+							<li><a href="contact.html">Contact Us</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Mobile-menu -->
+</header>
