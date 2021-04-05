@@ -1,0 +1,840 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<section class="page-content">
+      <div class="container">
+        {% comment %} <div class="row">
+          <div class="col-md-12">
+            <ul class="page-menu">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="#">cameras & photography</a></li>
+              <li class="active"><a href="#">Toch Prond</a></li>
+            </ul>
+          </div>
+        </div> {% endcomment %}
+		    <br>
+        <div class="row">
+          <div class="col-md-3">
+            <!-- CATEGORY-MENU-LIST START -->
+			<div class="left-category-menu hidden-sm hidden-xs">
+				<div class="left-product-cat">
+					<div class="category-heading">
+						<h2>категории</h2>
+					</div>
+					<div class="category-menu-list">
+						<ul>
+							{% for category in categories %}  
+
+								{% if subcategories|dict_key:category %}
+									{% comment %} <p>{{ subcategories.category }}</p> {% endcomment %}
+									<!-- Single menu start -->
+									<li class="arrow-plus">
+									<a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a>
+									<!--  MEGA MENU START -->
+									<div class="cat-left-drop-menu">
+											<div class="cat-left-drop-menu-left">
+											<a class="menu-item-heading" href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a>
+											<ul>
+													{% comment %} {% for subcategory in subcategories.category %} {% endcomment %}
+													{% for subcategory in subcategories|dict_key:category %}
+															<li><a href="{% url 'home_view' %}subcategory/{{ subcategory.slug }}">{{ subcategory }}</a></li>
+													{% endfor %}
+											</ul>
+											</div>
+									</div>
+									<!-- MEGA MENU END -->
+									</li>
+									<!-- Single menu end -->
+									{% else %}
+											<li><a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a></li>
+								{% endif %}
+							{% endfor %}
+							<!-- MENU ACCORDION END --> 
+						</ul>
+					</div>
+				</div>
+			</div>
+            <!-- END CATEGORY-MENU-LIST -->
+            <!-- START SMALL-PRODUCT-AREA -->
+            {% comment %} <div
+              class="small-product-area carosel-navigation hidden-sm hidden-xs"
+            >
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="area-title">
+                    <h3 class="title-group gfont-1">Bestseller</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="active-bestseller sidebar">
+                  <div class="col-xs-12">
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/1.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Various Versions</a></h5>
+                        <div class="price-box">
+                          <span class="price">$90.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/2.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Established Fact</a></h5>
+                        <div class="price-box">
+                          <span class="price">$99.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/3.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Various Versions</a></h5>
+                        <div class="price-box">
+                          <span class="price">$90.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/4.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Established Fact</a></h5>
+                        <div class="price-box">
+                          <span class="price">$99.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                  </div>
+                  <div class="col-xs-12">
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/5.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Various Versions</a></h5>
+                        <div class="price-box">
+                          <span class="price">$90.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/6.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Established Fact</a></h5>
+                        <div class="price-box">
+                          <span class="price">$99.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/7.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Various Versions</a></h5>
+                        <div class="price-box">
+                          <span class="price">$90.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                    <!-- Start Single-Product -->
+                    <div class="single-product">
+                      <div class="product-img">
+                        <a href="#">
+                          <img
+                            class="primary-img"
+                            src="img/product/small/8.jpg"
+                            alt="Product"
+                          />
+                        </a>
+                      </div>
+                      <div class="product-description">
+                        <h5><a href="#">Established Fact</a></h5>
+                        <div class="price-box">
+                          <span class="price">$99.00</span>
+                          <span class="old-price">$110.00</span>
+                        </div>
+                        <span class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-o"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Single-Product -->
+                  </div>
+                </div>
+              </div>
+            </div> {% endcomment %}
+            <!-- END SMALL-PRODUCT-AREA -->
+            <!-- START SIDEBAR-BANNER -->
+            <div class="sidebar-banner hidden-sm hidden-xs">
+              <div class="active-sidebar-banner">
+                <div class="single-sidebar-banner">
+                  <a href="#"
+                    ><img src="{{ MEDIA_URL }}img/banner/1.jpg" alt="Product Banner"
+                  /></a>
+                </div>
+                <div class="single-sidebar-banner">
+                  <a href="#"
+                    ><img src="{{ MEDIA_URL }}img/banner/2.jpg" alt="Product Banner"
+                  /></a>
+                </div>
+              </div>
+            </div>
+            <!-- END SIDEBAR-BANNER -->
+          </div>
+          <div class="col-md-9 col-sm-12 col-xs-12">
+            <!-- Start Toch-Prond-Area -->
+            <div class="toch-prond-area">
+              <div class="row">
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                  <div class="clear"></div>
+                  <div class="tab-content">
+                    <!-- Product = display-1-1 -->
+                    <div
+                      role="tabpanel"
+                      class="tab-pane fade in active"
+                      id="display-1"
+                    >
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="toch-photo">
+                            <a href="#"
+                              ><img
+                                {% if product.image %}
+                                    src="{{ MEDIA_URL }}{{ product.image }}"
+                          		{% else %}
+                                    src="{{ MEDIA_URL }}no_photo.jpg"
+                          		{% endif %}
+                                data-imagezoom="true"
+                                alt="Товар"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product = display-1-1 -->
+                    {% comment %} <!-- Start Product = display-1-2 -->
+                    <div role="tabpanel" class="tab-pane fade" id="display-2">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="toch-photo">
+                            <a href="#"
+                              ><img
+                                src="img/toch/2.jpg"
+                                data-imagezoom="true"
+                                alt="#"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product = display-1-2 -->
+                    <!-- Start Product = di3play-1-3 -->
+                    <div role="tabpanel" class="tab-pane fade" id="display-3">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="toch-photo">
+                            <a href="#"
+                              ><img
+                                src="img/toch/3.jpg"
+                                data-imagezoom="true"
+                                alt="#"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product = display-1-3 -->
+                    <!-- Start Product = di3play-1-4 -->
+                    <div role="tabpanel" class="tab-pane fade" id="display-4">
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="toch-photo">
+                            <a href="#"
+                              ><img
+                                src="img/toch/4.jpg"
+                                data-imagezoom="true"
+                                alt="#"
+                            /></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Product = display-1-4 --> {% endcomment %}
+                  </div>
+                  <!-- Start Toch-prond-Menu -->
+                  {% comment %} <div class="toch-prond-menu">
+                    <ul role="tablist">
+                      <li role="presentation" class="active">
+                        <a href="#display-1" role="tab" data-toggle="tab"
+                          ><img src="img/toch/1.jpg" alt="#"
+                        /></a>
+                      </li>
+                      <li role="presentation">
+                        <a href="#display-2" role="tab" data-toggle="tab"
+                          ><img src="img/toch/2.jpg" alt="#"
+                        /></a>
+                      </li>
+                      <li role="presentation">
+                        <a href="#display-3" role="tab" data-toggle="tab"
+                          ><img src="img/toch/3.jpg" alt="#"
+                        /></a>
+                      </li>
+                      <li role="presentation">
+                        <a href="#display-4" role="tab" data-toggle="tab"
+                          ><img src="img/toch/4.jpg" alt="#"
+                        /></a>
+                      </li>
+                    </ul>
+                  </div> {% endcomment %}
+                  <!-- End Toch-prond-Menu -->
+                </div>
+                <div class="col-md-7 col-sm-7 col-xs-12">
+                  <h2 class="title-product">{{ product.name }}</h2>
+                  <div class="about-toch-prond">
+                    <hr />
+                    <p class="short-description">
+                      {{ product.description }}
+                    </p>
+                    <hr />
+
+                    {% if product.discount_price %}
+
+                      <span class="current-price">{{ product.discount_price }}</span>
+                      <span class="old-price">{{ product.price }}</span>
+                    
+                    {% else %}
+
+                      <span class="current-price">{{ product.price }}</span>
+
+                    {% endif %}
+
+                    <span class="item-stock"> 
+                      В наличии
+                      {% comment %} <span class="text-stock">{{ product.count }}</span> {% endcomment %}
+                    </span>
+                  </div>
+                  <div class="product-quantity">
+                    {% comment %} <span>Количество</span>
+                    <input type="number" placeholder="1" /> {% endcomment %}
+                    <form action="{% url 'cart_add' product.id %}" method="post">
+                      {{ cart_product_form }}
+                      {% csrf_token %}
+                      {% comment %} <input type="submit" value="Добавить в корзину"> {% endcomment %}
+                      <button>
+                        <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                      </button>
+                    </form>
+                    <hr />
+                  </div>
+                </div>
+              </div>
+              <!-- Start Toch-Box -->
+              <div class="toch-box">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <!-- Start Toch-Menu -->
+                    <div class="toch-menu">
+                      <ul role="tablist">
+                        {% comment %} <li role="presentation" class="active">
+                          <a href="#description" role="tab" data-toggle="tab"
+                            >Описание</a
+                          >
+                        </li> {% endcomment %}
+                        <li role="presentation" class="active">
+                          <a href="#reviews" role="tab" data-toggle="tab"
+                            >Отзывы ({{ comments.count }})</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- End Toch-Menu -->
+                    <div class="tab-content toch-description-review">
+                      {% comment %} <!-- Start display-description -->
+                      <div
+                        role="tabpanel"
+                        class="tab-pane fade in active"
+                        id="description"
+                      >
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="toch-description">
+                              <p>
+                                {{ product.description }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End display-description --> {% endcomment %}
+                      <!-- Start display-reviews -->
+                      <div role="tabpanel" class="tab-pane fade in active" id="reviews">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="toch-reviews">
+                              
+							  
+							  {% if comments.count > 0 %}
+							  {% for comment in comments %}
+							  
+							  <div class="toch-table">
+                                <table
+                                  class="table table-striped table-bordered"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <td><strong>{{ comment.user }}</strong></td>
+                                      <td class="text-right">
+                                        <strong>{{ comment.created }}</strong>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="2">
+                                        <p>
+                                          {{ comment.text }}
+                                        </p>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+							  {% endfor %}
+							  {% endif %}
+								  
+							  {% if user.is_authenticated %}	  
+							  <div class="toch-review-title">
+								<hr>
+                                <h2>Оставьте отзыв</h2>
+                              </div>
+                              <div class="review-message">
+                                <div class="col-xs-12">
+                                  <p>
+                                    <sup>*</sup>Ваше имя <br />
+                                    <input type="text" class="form-control" />
+                                  </p>
+                                  <p>
+                                    <sup>*</sup>Ваш отзыв <br />
+                                    <textarea class="form-control"></textarea>
+                                  </p>
+                                </div>
+                                <div class="help-block">
+                                  <span class="note">Note:</span>
+                                  HTML is not translated!
+                                </div>
+                                <div class="buttons clearfix">
+                                  <button class="btn btn-primary pull-right">
+                                    Продолжить
+                                  </button>
+                                </div>
+                              </div>
+							  {% else %}
+							  <hr>
+							  <p>Чтобы оставить комментарий, авторизируйтесь!</p>
+							  {% endif %}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Product = display-reviews -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Toch-Box -->
+              <!-- START PRODUCT-AREA -->
+              {% comment %} <div class="product-area">
+                <div class="row">
+                  <div class="col-xs-12 col-md-12">
+                    <!-- Start Product-Menu -->
+                    <div class="product-menu">
+                      <div class="product-title">
+                        <h3 class="title-group-2 gfont-1">Related Products</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Product-Menu -->
+                <div class="clear"></div>
+                <!-- Start Product -->
+                <div class="product carosel-navigation">
+                  <div class="row">
+                    <div class="active-product-carosel">
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/3bg.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Various Versions</a></h5>
+                            <div class="price-box">
+                              <span class="price">$80.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/11.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Trid Palm</a></h5>
+                            <div class="price-box">
+                              <span class="price">$79.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/1.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Established Fact</a></h5>
+                            <div class="price-box">
+                              <span class="price">$75.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/2.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Trid Palm</a></h5>
+                            <div class="price-box">
+                              <span class="price">$95.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/13.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Established Fact</a></h5>
+                            <div class="price-box">
+                              <span class="price">$82.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/10.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Trid Palm</a></h5>
+                            <div class="price-box">
+                              <span class="price">$99.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                      <!-- Start Single-Product -->
+                      <div class="col-xs-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="#">
+                              <img
+                                class="primary-img"
+                                src="img/product/mediam/10bg.jpg"
+                                alt="Product"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-description">
+                            <h5><a href="#">Various Versions</a></h5>
+                            <div class="price-box">
+                              <span class="price">$95.00</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Single-Product -->
+                    </div>
+                  </div>
+                </div>
+                <!-- End Product --> {% endcomment %}
+              </div>
+              <!-- END PRODUCT-AREA -->
+            </div>
+            <!-- End Toch-Prond-Area -->
+          </div>
+        </div>
+      </div>
+      <!-- START BRAND-LOGO-AREA -->
+      <div class="brand-logo-area carosel-navigation">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="area-title">
+                <h3 class="title-group border-red gfont-1">Brand Logo</h3>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="active-brand-logo">
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/1.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/2.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/3.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/4.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/5.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/6.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/1.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/2.png" alt="" /></a>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="single-brand-logo">
+                  <a href="#"><img src="{{ MEDIA_URL }}img/brand/3.png" alt="" /></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END BRAND-LOGO-AREA -->
+      <!-- START SUBSCRIBE-AREA -->
+      <div class="subscribe-area">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-sm-7 col-xs-12">
+              <label class="hidden-sm hidden-xs"
+                >Sign Up for Our Newsletter:</label
+              >
+              <div class="subscribe">
+                <form action="#">
+                  <input type="text" placeholder="Enter Your E-mail" />
+                  <button type="submit">Subscribe</button>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-5 col-xs-12">
+              <div class="social-media">
+                <a href="#"><i class="fa fa-facebook fb"></i></a>
+                <a href="#"><i class="fa fa-google-plus gp"></i></a>
+                <a href="#"><i class="fa fa-twitter tt"></i></a>
+                <a href="#"><i class="fa fa-youtube yt"></i></a>
+                <a href="#"><i class="fa fa-linkedin li"></i></a>
+                <a href="#"><i class="fa fa-rss rs"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END SUBSCRIBE-AREA -->
+    </section>
+{% endblock content %}

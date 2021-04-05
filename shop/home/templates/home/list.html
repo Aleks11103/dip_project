@@ -4,15 +4,7 @@
 {% block content %}
 <section class="page-content">
   <div class="container">
-    {% comment %} <div class="row">
-      <div class="col-md-12">
-        <ul class="page-menu">
-          <li><a href="index.html">Home</a></li>
-          <li class="active"><a href="#">Bestseller Product</a></li>
-        </ul>
-      </div>
-    </div> {% endcomment %}
-    <p></p>
+    <br>
     <div class="row">
       <div class="col-md-3">
         <!-- CATEGORY-MENU-LIST START -->
@@ -39,57 +31,15 @@
                             {% for subcategory in subcategories|dict_key:category %}
                                 <li><a href="{% url 'home_view' %}subcategory/{{ subcategory.slug }}">{{ subcategory }}</a></li>
                             {% endfor %}
-                            {% comment %} <li><a href="#">Blouses And Shirts</a></li>
-                            <li><a href="#">Clutches</a></li>
-                            <li><a href="#">Cross Body</a></li>
-                            <li><a href="#">Satchels</a></li>
-                            <li><a href="#">Sholuder</a></li>
-                            <li><a href="#">Toter</a></li> {% endcomment %}
                         </ul>
                         </div>
-                        {% comment %} <div class="cat-left-drop-menu-left">
-                        <a class="menu-item-heading" href="#">Tops</a>
-                        <ul>
-                            <li><a href="#">Evening</a></li>
-                            <li><a href="#">Long Sleeved</a></li>
-                            <li><a href="#">Short Sleeved</a></li>
-                            <li><a href="#">Sleeveless</a></li>
-                            <li><a href="#">T-Shirts</a></li>
-                            <li><a href="#">Tanks And Camis</a></li>
-                        </ul>
-                        </div>
-                        <div class="cat-left-drop-menu-left">
-                        <a class="menu-item-heading" href="#">Dresses</a>
-                        <ul>
-                            <li><a href="#">Belts</a></li>
-                            <li><a href="#">Cocktail</a></li>
-                            <li><a href="#">Day</a></li>
-                            <li><a href="#">Evening</a></li>
-                            <li><a href="#">Sundresses</a></li>
-                            <li><a href="#">Sweater</a></li>
-                        </ul>
-                        </div>
-                        <div class="cat-left-drop-menu-left">
-                        <a class="menu-item-heading" href="#">Accessories</a>
-                        <ul>
-                            <li><a href="#">Bras</a></li>
-                            <li><a href="#">Hair Accessories</a></li>
-                            <li><a href="#">Hats And Gloves</a></li>
-                            <li><a href="#">Lifestyle</a></li>
-                            <li><a href="#">Scarves</a></li>
-                            <li><a href="#">Small Leathers</a></li>
-                        </ul>
-                        </div> {% endcomment %}
                     </div>
                     <!-- MEGA MENU END -->
                     </li>
                     <!-- Single menu end -->
-
                     {% else %}
                         <li><a href="{% url 'home_view' %}category/{{ category.slug }}">{{ category }}</a></li>
-
                   {% endif %}
-                        
                 {% endfor %}
                 <!-- MENU ACCORDION END --> 
               </ul>
@@ -158,92 +108,6 @@
                   <div role="tabpanel" class="tab-pane fade" id="display-1-1">
                     <div class="row">
                       <div class="listview">
-                        
-{% comment %}                        
-                        <!-- Start Single-Product -->
-                        <div class="single-product">
-                          <div class="col-md-3 col-sm-4 col-xs-12">
-                             <div class="label_new">
-                              <span class="new">new</span>
-                            </div> 
-                            <div class="sale-off">
-                              <span class="sale-percent">-55%</span>
-                            </div>
-                            <div class="product-img">
-                              <a href="#">
-                                <img
-                                  class="primary-img"
-                                  src="{{ MEDIA_URL }}media/img/product/mediam/10.jpg"
-                                  alt="Product"
-                                />
-                                <img
-                                  class="secondary-img"
-                                  src="{{ MEDIA_URL }}media/img/product/mediam/10bg.jpg"
-                                  alt="Product"
-                                />
-                              </a>
-                            </div>
-                          </div>
-                          <div class="col-md-9 col-sm-8 col-xs-12">
-                            <div class="product-description">
-                              <h5><a href="#">Various Versions</a></h5>
-                              <div class="price-box">
-                                <span class="price">$99.00</span>
-                                <span class="old-price">$110.00</span>
-                              </div>
-                              <span class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
-                              </span>
-                              <p class="description">
-                                Nunc facilisis sagittis ullamcorper. Proin
-                                lectus ipsum, gravida et mattis vulputate,
-                                tristique ut lectus. Sed et lorem nunc.
-                                Vestibulum ante ipsum primis in faucibus orci
-                                luctus et ultrices posuere cubilia Curae; Aenean
-                                eleifend laoreet congue. Viva..
-                              </p>
-                              <div class="product-action">
-                                <div class="button-group">
-                                  <div class="product-button">
-                                    <button>
-                                      <i class="fa fa-shopping-cart"></i> Add to
-                                      Cart
-                                    </button>
-                                  </div>
-                                  <div class="product-button-2">
-                                    <a
-                                      href="#"
-                                      data-toggle="tooltip"
-                                      title="Wishlist"
-                                      ><i class="fa fa-heart-o"></i
-                                    ></a>
-                                    <a
-                                      href="#"
-                                      data-toggle="tooltip"
-                                      title="Compare"
-                                      ><i class="fa fa-signal"></i
-                                    ></a>
-                                    <a
-                                      href="#"
-                                      class="modal-view"
-                                      data-toggle="modal"
-                                      data-target="#productModal"
-                                      title="Quickview"
-                                      ><i class="fa fa-search-plus"></i
-                                    ></a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- End Single-Product --> {% endcomment %}
-
                       </div>
                     </div>
                   </div>
@@ -254,7 +118,6 @@
                     class="tab-pane fade in active"
                     id="display-1-2"
                   >
-                    
                     <div class="row">
                     
                     {% if not products %}
@@ -280,33 +143,28 @@
                           {% endif %}
 
                           <div class="product-img">
-                            <a href="#">
+                            <a href="{% url 'home_view' %}product/{{ product.id }}">
                               <img
                                 class="primary-img"
-                          {% if product.image %}
-                                src="{{ MEDIA_URL }}media/{{ product.image }}"
-                                {% comment %} src="{% static 'img' %}/{{ product.image }}" {% endcomment %}
-                          {% else %}
-                                src="media/no_photo.jpg"
-                                {% comment %} src="{% static 'img/no_photo.jpg' %}" {% endcomment %}
-                          {% endif %}
+                                width=180px
+                                {% if product.image %}
+                                      src="{{ MEDIA_URL }}{{ product.image }}"
+                                {% else %}
+                                      src="{{ MEDIA_URL }}no_photo.jpg"
+                                {% endif %}
                                 alt="Товар"
                               />
                             </a>
                           </div>
                           <div class="product-description">
-                            <h5><a href="#">{{ product.name }}</a></h5>
+                            <h5><a href="{% url 'home_view' %}product/{{ product.id }}">{{ product.name }}</a></h5>
                             <div class="price-box">
                             
                             {% if product.discount_price %}
-
                               <span class="price">{{ product.discount_price }}</span>
                               <span class="old-price">{{ product.price }}</span>
-                            
                             {% else %}
-
                               <span class="price">{{ product.price }}</span>
-
                             {% endif %}
 
                             </div>
@@ -318,11 +176,13 @@
                               <i class="fa fa-star-o"></i>
                             </span> {% endcomment %}
                             <div class="product-button">
-                                <button>
-                                  <i class="fa fa-shopping-cart"></i> Добавить в корзину
-                                </a>
-                                </button>
-                              </div>
+                              {% comment %} <a href={% url 'cart_add' product.id %} style="color: white;">
+                              <button onclick="location.href={% url 'cart_add' product.id %}">
+                              <button>
+                                <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                              </button>
+                              </a> {% endcomment %}
+                            </div>
                           </div>
                           {% comment %} <div class="product-action">
                             <div class="button-group">
@@ -412,47 +272,47 @@
         <div class="active-brand-logo">
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/1.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/1.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/2.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/2.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/3.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/3.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/4.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/4.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/5.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/5.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/6.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/6.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/1.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/1.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/2.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/2.png" alt="" /></a>
             </div>
           </div>
           <div class="col-md-2">
             <div class="single-brand-logo">
-              <a href="#"><img src="{{ MEDIA_URL }}media/img/brand/3.png" alt="" /></a>
+              <a href="#"><img src="{{ MEDIA_URL }}img/brand/3.png" alt="" /></a>
             </div>
           </div>
         </div>

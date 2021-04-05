@@ -3,12 +3,9 @@ from django.views import generic
 from home.models import User, Brand, Category, Comment, MadeIn, Product, Subcategory 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.defaulttags import register
+from cart.forms import CartAddProductForm
 
 
-# class ProductList(generic.ListView):
-#     model = Product
-#     template_name = 'home/list.html',
-#     paginate_by = 16
 
 @register.filter
 def dict_key(dictionary, key):
@@ -58,55 +55,28 @@ def product_list(request, category_slug=None, subcategory_slug=None):
     )
 
 
-# def product_list(request, brand_slug=None, category_slug=None, subcategory_slug=None):
-#     brand = None
-#     category = None
-#     subcategory = None
-#     brands = Brand.objects.all()
-#     categories = Category.objects.all()
-#     subcategories = SubCategory.objects.all()
-#     products = Product.objects.filter(available=True)
-#     if brand_slug:
-#         brand = get_object_or_404(Brand, slug=brand_slug)
-#         products = products.filter(brand=brand)
-#     elif category_slug:
-#         category = get_object_or_404(Category, slug=category_slug)
-#         products = products.filter(category=category)
-#     elif subcategory_slug:
-#         subcategory = get_object_or_404(SubCategory, slug=subcategory_slug)
-#         products = products.filter(subcategory=subcategory)
-#     return render(
-#         request,
-#         'home/list.html',
-#         # 'list.html',
-#         {
-#             'brand': brand,
-#             'brands': brands,
-#             'category': category,
-#             'categories': categories,
-#             'products': products,
-#             'subcategory': subcategory,
-#             'subcategories': subcategories    
-#         }
-#     )
-
-
-def product_detail(request, id, slug):
+def product_detail(request, id):
     product = get_object_or_404(
         Product,
         id=id,
-        slug=slug,
         available=True,
     )
     comments = Comment.objects.filter(product=product)
+    categories = Category.objects.all()
+    subcategories = {}
+    if categories:
+        for category in categories:
+            subcategories[category] = Subcategory.objects.filter(category_id=category)
     cart_product_form = CartAddProductForm()
     return render(
         request,
         'home/detail.html',
         {
             'product': product,
+            'comments': comments,
+            'categories': categories,
+            'subcategories': subcategories,
             'cart_product_form': cart_product_form,
-            'comments': comments
         }
     )
 
