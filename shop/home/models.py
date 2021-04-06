@@ -101,7 +101,7 @@ class Subcategory(models.Model):
         blank=True,
         verbose_name='Категория',
         help_text='Выберите категорию', 
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
     )
 
     class Meta:
@@ -195,25 +195,25 @@ class Product(models.Model):
         Brand, 
         verbose_name='Бренд', 
         help_text='Выберите бренд товара',
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
     )
     made_in = models.ForeignKey(
         MadeIn, 
         verbose_name='Сделано в', 
         help_text='Выберите страну производителя',
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
     )
     category = models.ForeignKey(
         Category, 
         verbose_name='Название категории',
         help_text='Выберите категорию товара', 
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
     )
     subcategory = models.ForeignKey(
         Subcategory, 
         verbose_name='Название подкатегории',
         help_text='Выберите подкатегорию товара',
-        on_delete=models.RESTRICT,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )

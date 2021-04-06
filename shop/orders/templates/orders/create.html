@@ -113,7 +113,15 @@
 								</table>
 
 								<form action="." method="post" class="order-form" style="padding-left: 20px">
-									{{ form.as_p }}
+                  {% for field in form %}
+                    <div>
+                      {{ field.errors }}
+                      <p>{{ field.label_tag }} <br>
+                      {{ field }}</p>
+                      {% if field.help_text %}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
 									<p><input type="submit" class="btn btn-primary" value="Оформить заказ"></p>
 									{% csrf_token %}
 								</form>
