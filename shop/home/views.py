@@ -1,11 +1,16 @@
-from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect, reverse
-from django.views import generic
-from home.models import User, Brand, Category, Comment, MadeIn, Product, Subcategory 
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash, decorators as dec
+from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.forms.models import model_to_dict
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect, reverse
 from django.template.defaulttags import register
+from django.views import generic
+from cart.cart import Cart
 from cart.forms import CartAddProductForm
-from home.forms import UserLoginForm, UserRegisterForm
-from django.contrib.auth import login, logout, authenticate, decorators as dec
+from home.forms import UserLoginForm, UserRegisterForm, UserEditForm
+from home.models import User, Brand, Category, Comment, MadeIn, Product, Subcategory 
+
+from django.forms import modelform_factory
 
 
 
@@ -86,7 +91,10 @@ def product_detail(request, id):
 def login_page(request):
     if request.user.is_authenticated:
         return redirect(reverse('home_view'))
-    context = {'form': UserLoginForm()}
+    context = {
+        'form': UserLoginForm(),
+        'cart': Cart(request),
+    }
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -111,3 +119,71 @@ def login_page(request):
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') if request.META.get('HTTP_REFERER') is not None else redirect(reverse('home_view')))
+
+
+def register_page(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('home_view'))
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            if form.cleaned_data['role'] == 'u':
+                new_user.is_moderated = True
+                new_user.save()
+            elif form.cleaned_data['role'] == 's':
+                new_user.is_moderated = False
+                new_user.is_active = False
+                new_user.is_staff = True
+                new_user.save()
+                group = Group.objects.get(name='sallers')
+                new_user.groups.add(group)
+            
+            return redirect(reverse('login_page'))
+    else:
+        form = UserRegisterForm()
+    return render(
+        request,
+        'home/register.html',
+        {
+            'form': form,
+            'cart': Cart(request),
+        }    
+    )
+
+
+def account_page(request, username):
+    flag = False
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, username=username)
+        if request.method == "POST":
+            Form = modelform_factory(
+                User, form=UserEditForm, fields=('first_name', 'last_name', 'email', 'sex', 'birth_date', 'land', 'city',)
+            )
+            # form = Form(request.POST, instance=user)
+            form = Form(request.POST, instance=user)
+            if form.is_valid():
+                user_form = form.save(commit=False)
+                if form.cleaned_data['password']:
+                    user_form.set_password(form.cleaned_data['password'])
+                if form.has_changed():
+                    flag = True
+                    user_form.save()
+                    update_session_auth_hash(request, user)
+                else:
+                    flag = False
+        else:
+            form = UserEditForm(instance=user)
+        return render(
+            request,
+            'home/account.html',
+            {
+                'cart': Cart(request),
+                'form': form,
+                'username': username,
+                'flag': flag,
+            }
+        )
+    else:
+        return redirect(reverse('home_view'))

@@ -28,7 +28,11 @@
 							</li>
 						</ul>
 						<!-- End Currency -->
-						<p class="welcome-msg">Добро пожаловать в наш магазин!</p>
+						{% if user.is_authenticated %}
+							<p class="welcome-msg">Добро пожаловать в наш магазин, <strong>{{ user.username }}</strong>!</p>
+						{% else %}
+							<p class="welcome-msg">Добро пожаловать в наш магазин!</p>
+						{% endif %}
 					</div>
 					<!-- Start Top-Link -->
 					<div class="top-link">
@@ -39,11 +43,16 @@
 							
 
 							{% if user.is_authenticated %}
-								<li><a href="my-account.html"><i class="fa fa-user"></i> Аккаунт </a></li>
-								<li><a href={% url 'user_logout' %}><i class="fa fa-sign-out"></i> Выйти </a></li>
+								<li><a href={% url 'account_page' user.username %}><i class="fa fa-user"></i> Аккаунт </a></li>
+								
+								{% if user.is_staff %}
+								<li><a href={% url 'admin:index' %}><i class="fa fa-cog"></i> Админка </a></li>
+								{% endif %}
+									
+								<li><a href={% url 'logout_page' %}><i class="fa fa-sign-out"></i> Выйти </a></li>
 							{% else %}
-								<li><a href={% url 'user_login' %}><i class="fa fa-sign-in"></i> Войти </a></li>
-								<li><a href="#"><i class="fa fa-user-plus"></i> Зарегистрироваться </a></li>
+								<li><a href={% url 'login_page' %}><i class="fa fa-sign-in"></i> Войти </a></li>
+								<li><a href={% url 'register_page' %}><i class="fa fa-user-plus"></i> Зарегистрироваться </a></li>
 							{% endif %}
 
 							{% comment %} <li><a href="account.html"><i class="fa fa-unlock-alt"></i> Войти</a></li> {% endcomment %}
@@ -152,7 +161,11 @@
 									<a href={% url 'cart_detail' %}>
 										<span class="cart-icon"><i class="fa fa-shopping-cart"></i></span>
 										<span class="cart-total">
+										
+										{% if cart|length > 0 %}
 											<span class="cart-title">корзина</span>
+										{% endif %}
+											
 											{% with total_items=cart|length %}
 												{% if total_items > 0 %}
 												<span class="cart-item">{{ total_items }} товар(-ов)- </span>
