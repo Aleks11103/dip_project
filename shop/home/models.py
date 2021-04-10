@@ -272,12 +272,11 @@ class Comment(models.Model):
         Product, 
         verbose_name='Товар', 
         help_text='Выберите товар для комментария',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
-    text = models.TextField(
-        verbose_name='Комментарий',
-        help_text='Напишите комментарий',
-    )
+    text = models.TextField(verbose_name='')
     created = models.DateTimeField(
         auto_now_add=True,
         db_index=True,
@@ -287,6 +286,8 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
         help_text='Пользователь, написавший комментарий',
+        null=True,
+        blank=True,
     )
 
     class Meta:

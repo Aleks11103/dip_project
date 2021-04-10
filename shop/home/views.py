@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash, decorators as dec
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -7,7 +8,7 @@ from django.template.defaulttags import register
 from django.views import generic
 from cart.cart import Cart
 from cart.forms import CartAddProductForm
-from home.forms import UserLoginForm, UserRegisterForm, UserEditForm
+from home.forms import UserLoginForm, UserRegisterForm, UserEditForm, CommentForm
 from home.models import User, Brand, Category, Comment, MadeIn, Product, Subcategory 
 from orders.models import Order, OrderItem
 
@@ -74,10 +75,22 @@ def product_detail(request, id):
         for category in categories:
             subcategories[category] = Subcategory.objects.filter(category_id=category)
     cart_product_form = CartAddProductForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.product = product
+            print('\n\n', comment.text, '\n\n')
+            comment.save()
+            return HttpResponseRedirect(request.path)
+    else:
+        form = CommentForm()
     return render(
         request,
         'home/detail.html',
         {
+            'form': form,
             'product': product,
             'comments': comments,
             'categories': categories,
@@ -167,17 +180,38 @@ def account_page(request, username):
                 if form.cleaned_data['password']:
                     user_form.set_password(form.cleaned_data['password'])
                 if form.has_changed():
-                    flag = True
+                    flag = True         # Для вывода сообщения об изменении даннных
                     user_form.save()
                     update_session_auth_hash(request, user)
                 else:
                     flag = False
         else:
             form = UserEditForm(instance=user)
-        # orders_items = {}
-        # orders = Order.objects.filter(user=user).order_by('-created')
-        # for order in orders:
-        #     orders_items[order.id] = OrderItem.objects.filter(order=order)
+        dict_orders = {}
+        orders = Order.objects.filter(user=user).order_by('-id')
+        if Order.objects.filter(user=user).order_by('-id').count() < 10:
+            order_count = orders.count()
+        else:
+            order_count = 10
+        orders = Order.objects.filter(user=user).order_by('-id')[:order_count]
+        for order in orders:
+            list_orders = []
+            dict_order = {}
+            order_items = OrderItem.objects.filter(order=order)
+            for element in order_items:
+                product = get_object_or_404(Product, id=element.product_id)
+                dict_order['quantity'] = element.quantity
+                dict_order['price'] = element.price
+                dict_order['total_price'] = element.get_cost()
+                dict_order['product_name'] = product.name
+                list_orders.append((dict_order['product_name'], dict_order['quantity'], dict_order['price'], dict_order['total_price']))
+            dict_orders[order.id] = list_orders
+            
+        for key, values in dict_orders.items():
+            print('\n', key, values, '\n')
+
+        #     for elem, value in orders_items:
+                # orders_items.total_price = Decimal(orders_items.price) * Decimal(orders_items.quantity)
         return render(
             request,
             'home/account.html',
@@ -186,6 +220,8 @@ def account_page(request, username):
                 'form': form,
                 'username': username,
                 'flag': flag,
+                'order_count': order_count,
+                'dict_orders': dict_orders,
             }
         )
     else:
