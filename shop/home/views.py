@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash, decorators as dec
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.forms.models import model_to_dict
+from django.forms import modelform_factory
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect, reverse
 from django.template.defaulttags import register
 from django.views import generic
@@ -9,8 +9,7 @@ from cart.cart import Cart
 from cart.forms import CartAddProductForm
 from home.forms import UserLoginForm, UserRegisterForm, UserEditForm
 from home.models import User, Brand, Category, Comment, MadeIn, Product, Subcategory 
-
-from django.forms import modelform_factory
+from orders.models import Order, OrderItem
 
 
 
@@ -175,6 +174,10 @@ def account_page(request, username):
                     flag = False
         else:
             form = UserEditForm(instance=user)
+        # orders_items = {}
+        # orders = Order.objects.filter(user=user).order_by('-created')
+        # for order in orders:
+        #     orders_items[order.id] = OrderItem.objects.filter(order=order)
         return render(
             request,
             'home/account.html',
