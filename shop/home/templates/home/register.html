@@ -3,9 +3,9 @@
 {% block content %}
 <section class="page-content">
 	<br>
-		<h1>Вход</h1>
+        <h1>Регистрация</h1>
+        <hr>
 		<form action="." method="post" style="padding-left: 20px">
-			{% csrf_token %}
 			{% if form.non_field_errors %}
 				<div>{{ form.non_field_errors }}</div>
 			{% endif %}
@@ -16,7 +16,8 @@
 					{{ field }}</p>
 				</div>
 			{% endfor %}
-			<p><input type="submit" class="btn btn-primary" value="Войти"></p>
+			<p><input type="submit" class="btn btn-primary" value="Зарегистрироваться"></p>
+			{% csrf_token %}
 		</form>
 	<br>
 </section>

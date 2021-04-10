@@ -7,7 +7,6 @@ from datetime import datetime
 
 class User(AbstractUser):
     SEX_CHOICES = [
-        (' ', ' '),
         ('м', 'мужской'),
         ('ж', 'женский'),
     ]
@@ -46,7 +45,11 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
-    avatat = models.ImageField(upload_to='users/avatars/')
+    avatat = models.ImageField(
+        upload_to='users/avatars/',
+        blank=True,
+        null=True,
+    )
 
     def get_absolute_url(self):
         return reverse(

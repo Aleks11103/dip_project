@@ -28,24 +28,34 @@
 							</li>
 						</ul>
 						<!-- End Currency -->
-						<p class="welcome-msg">Добро пожаловать в наш магазин!</p>
+						{% if user.is_authenticated %}
+							<p class="welcome-msg">Добро пожаловать в наш магазин, <strong>{{ user.username }}</strong>!</p>
+						{% else %}
+							<p class="welcome-msg">Добро пожаловать в наш магазин!</p>
+						{% endif %}
 					</div>
 					<!-- Start Top-Link -->
 					<div class="top-link">
 						<ul class="link">
-							<li><a href="my-account.html"><i class="fa fa-user"></i> Аккаунт</a></li>
+							
 							{% comment %} <li><a href="wishlist.html"><i class="fa fa-heart"></i> Wish List (0)</a></li> {% endcomment %}
 							{% comment %} <li><a href="checkout.html"><i class="fa fa-share"></i> Checkout</a></li> {% endcomment %}
 							
 
-							{% comment %} {% if  %}
+							{% if user.is_authenticated %}
+								<li><a href={% url 'account_page' user.username %}><i class="fa fa-user"></i> Аккаунт </a></li>
 								
+								{% if user.is_staff %}
+								<li><a href={% url 'admin:index' %}><i class="fa fa-cog"></i> Админка </a></li>
+								{% endif %}
+									
+								<li><a href={% url 'logout_page' %}><i class="fa fa-sign-out"></i> Выйти </a></li>
 							{% else %}
-								
-							{% endif %} {% endcomment %}
-							
-								
-							<li><a href="account.html"><i class="fa fa-unlock-alt"></i> Войти</a></li>
+								<li><a href={% url 'login_page' %}><i class="fa fa-sign-in"></i> Войти </a></li>
+								<li><a href={% url 'register_page' %}><i class="fa fa-user-plus"></i> Зарегистрироваться </a></li>
+							{% endif %}
+
+							{% comment %} <li><a href="account.html"><i class="fa fa-unlock-alt"></i> Войти</a></li> {% endcomment %}
 						</ul>
 					</div>
 					<!-- End Top-Link -->
@@ -151,7 +161,11 @@
 									<a href={% url 'cart_detail' %}>
 										<span class="cart-icon"><i class="fa fa-shopping-cart"></i></span>
 										<span class="cart-total">
+										
+										{% if cart|length > 0 %}
 											<span class="cart-title">корзина</span>
+										{% endif %}
+											
 											{% with total_items=cart|length %}
 												{% if total_items > 0 %}
 												<span class="cart-item">{{ total_items }} товар(-ов)- </span>
@@ -193,29 +207,19 @@
 										<div class="clear"></div>
 										{% endwith %}
 										{% endfor %}
-										{% comment %} <div class="cart-img-details">
-											<div class="cart-img-photo">
-												<a href="#"><img src="{{ MEDIA_URL }}img/product/total-cart2.jpg" alt="#"></a>
-											</div>
-											<div class="cart-img-content">
-												<a href="#"><h4>Fact Prone</h4></a>
-												<span>
-													<strong class="text-right">1 x</strong>
-													<strong class="cart-price text-right">$185.00</strong>
-												</span>
-											</div>
-											<div class="pro-del">
-												<a href="#"><i class="fa fa-times"></i></a>
-											</div>
-										</div> {% endcomment %}
 										<div class="cart-inner-bottom">
 											<span class="total">
 												Сумма:
 												<span class="amount">{{ cart.get_total_price }}</span>
 											</span>
 											<span class="cart-button-top">
-												<a href={% url 'cart_detail' %}>Показать корзину</a>
-												<a href={% url 'order_create' %}>Оформить заказ</a>
+												{% if cart|length > 0 %}
+													<a href={% url 'cart_detail' %}>Показать корзину</a>
+													<a href={% url 'order_create' %}>Оформить заказ</a>	
+												{% else %}
+													<p>Корзина пуста!</p>
+												{% endif %}
+													
 											</span>
 										</div>
 									</div>

@@ -1,11 +1,17 @@
 from django.db import models
-from home.models import Product
+from home.models import Product, User
 
 
 class Order(models.Model):
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
     first_name = models.CharField(
         max_length=50,
-        verbose_name='Имя',    
+        verbose_name='Имя',
     )
     last_name = models.CharField(
         max_length=50,

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="page-content" style="padding-left: 20px">
+	<br>
+        <h1>Кабинет пользователя, <strong>{{ username }}</strong></h1>
+        <hr>
+        
+        {% if flag %}
+            <p>Данные успешно обновлены</p>
+            <hr>
+        {% endif %}
+            
+		<form action="." method="post">
+			{% if form.non_field_errors %}
+				<div>{{ form.non_field_errors }}</div>
+			{% endif %}
+			{% for field in form %}
+				<div>
+					{{ field.errors }}
+					<p>{{ field.label_tag }} <br>
+					{{ field }}</p>
+				</div>
+			{% endfor %}
+			<p><input type="submit" class="btn btn-primary" value="Сохранить"></p>
+			{% csrf_token %}
+		</form>
+	<br>
+</section>
+{% endblock content %}
