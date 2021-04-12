@@ -27,7 +27,7 @@ def product_list(request, category_slug=None, subcategory_slug=None):
         object_list = Product.objects.filter(available=True, category=category)
     elif subcategory_slug:
         subcategory = get_object_or_404(Subcategory, slug=subcategory_slug)
-        name_filter = 'Категория: ' + subcategory.name
+        name_filter = 'Подкатегория: ' + subcategory.name
         object_list = Product.objects.filter(available=True, subcategory=subcategory)
     else:
         object_list = Product.objects.filter(available=True)
