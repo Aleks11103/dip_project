@@ -3,28 +3,60 @@
 {% block content %}
 <section class="page-content" style="padding-left: 20px">
 	<br>
-        <h1>Кабинет пользователя, <strong>{{ username }}</strong></h1>
-        <hr>
-        
-        {% if flag %}
-            <p>Данные успешно обновлены</p>
-            <hr>
-        {% endif %}
-            
-		<form action="." method="post">
-			{% if form.non_field_errors %}
-				<div>{{ form.non_field_errors }}</div>
-			{% endif %}
-			{% for field in form %}
-				<div>
-					{{ field.errors }}
-					<p>{{ field.label_tag }} <br>
-					{{ field }}</p>
-				</div>
-			{% endfor %}
-			<p><input type="submit" class="btn btn-primary" value="Сохранить"></p>
-			{% csrf_token %}
-		</form>
+		<h1>Кабинет пользователя, <strong>{{ username }}</strong></h1>
+		<hr>
+		<div class="row">
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				{% if flag %}
+						<p>Данные успешно обновлены</p>
+						<hr>
+				{% endif %}
+						
+				<form action="." method="post">
+					{% if form.non_field_errors %}
+						<div>{{ form.non_field_errors }}</div>
+					{% endif %}
+					{% for field in form %}
+						<div>
+							{{ field.errors }}
+							<p>{{ field.label_tag }} <br>
+							{{ field }}</p>
+						</div>
+					{% endfor %}
+					<p><input type="submit" class="btn btn-primary" value="Сохранить"></p>
+					{% csrf_token %}
+				</form>
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12" style='padding-right: 30px'>
+				
+				<h2>Последние {{ order_count }} заказов(-а)</h2>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<td class="text-left">Номер заказа</td>
+							<td class="text-left">Название товара</td>
+							<td class="text-left">Количество</td>
+							<td class="text-left">Цена за штуку</td>
+							<td class="text-left">Общая цена</td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for key, values in dict_orders.items %}
+							<tr>
+									<td class="text-center" rowspan={{ values|length|add:"1" }}><strong>{{ key }}</strong></td>
+							</tr>
+								{% for order_item in values %}
+							<tr>
+									<td class="text-left">{{ order_item.0 }}</td>
+									<td class="text-center">{{ order_item.1 }}</td>
+									<td class="text-center">{{ order_item.2 }}</td>
+									<td class="text-center">{{ order_item.3 }}</td>
+							</tr>
+								{% endfor %}
+						{% endfor %}
+					</tbody>
+				</table>
+		</div>
 	<br>
 </section>
 {% endblock content %}

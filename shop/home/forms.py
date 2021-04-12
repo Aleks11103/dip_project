@@ -1,5 +1,5 @@
 from django import forms
-from home.models import User
+from home.models import User, Comment
 
 
 class UserLoginForm(forms.ModelForm):
@@ -60,3 +60,16 @@ class UserEditForm(forms.ModelForm):
         if cd['password'] != cd['repeat_password']:
             raise forms.ValidationError('Пароли не совпадают!!!')
         return cd['repeat_password']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text', 'product', 'user']
+        widgets = {
+            'product': forms.HiddenInput(),
+            'user': forms.HiddenInput(),
+        }
+    
+    def clean(self):
+        return self.cleaned_data

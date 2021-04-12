@@ -156,9 +156,9 @@
                           >
                         </li> {% endcomment %}
                         <li role="presentation" class="active">
-                          <a href="#reviews" role="tab" data-toggle="tab"
-                            >Отзывы ({{ comments.count }})</a
-                          >
+                          <a href="#reviews" role="tab" data-toggle="tab">
+                            Отзывы ({{ comments.count }})
+                          </a>
                         </li>
                       </ul>
                     </div>
@@ -192,55 +192,50 @@
 							  {% for comment in comments %}
 							  
 							  <div class="toch-table">
-                                <table
-                                  class="table table-striped table-bordered"
-                                >
-                                  <tbody>
-                                    <tr>
-                                      <td><strong>{{ comment.user }}</strong></td>
-                                      <td class="text-right">
-                                        <strong>{{ comment.created }}</strong>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td colspan="2">
-                                        <p>
-                                          {{ comment.text }}
-                                        </p>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                      <tr>
+                        <td><strong>{{ comment.user }}</strong></td>
+                        <td class="text-right">
+                          <strong>{{ comment.created }}</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <p>
+                            {{ comment.text }}
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 							  {% endfor %}
 							  {% endif %}
 								  
 							  {% if user.is_authenticated %}	  
 							  <div class="toch-review-title">
 								<hr>
-                                <h2>Оставьте отзыв</h2>
-                              </div>
-                              <div class="review-message">
-                                <div class="col-xs-12">
-                                  <p>
-                                    <sup>*</sup>Ваше имя <br />
-                                    <input type="text" class="form-control" />
-                                  </p>
-                                  <p>
-                                    <sup>*</sup>Ваш отзыв <br />
-                                    <textarea class="form-control"></textarea>
-                                  </p>
-                                </div>
-                                <div class="help-block">
-                                  <span class="note">Note:</span>
-                                  HTML is not translated!
-                                </div>
-                                <div class="buttons clearfix">
-                                  <button class="btn btn-primary pull-right">
-                                    Продолжить
-                                  </button>
-                                </div>
-                              </div>
+                <h2>Оставьте отзыв</h2>
+                </div>
+                <div class="review-message">
+                  <div class="col-xs-12">
+                      <form action="." method="post">
+                        {% if form.non_field_errors %}
+                          <div>{{ form.non_field_errors }}</div>
+                        {% endif %}
+                          <div>
+                            {% if form.errors %}
+                              {{ form.errors }}<br>
+                            {% endif %} 
+                            {{ form }}
+                          </div>
+                        <input type="submit" class="btn btn-primary" value="Отправить">
+                        {% csrf_token %}
+                      </form>
+                    </p>
+                  </div>
+                </div>
 							  {% else %}
 							  <hr>
 							  <p>Чтобы оставить комментарий, авторизируйтесь!</p>
